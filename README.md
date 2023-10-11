@@ -1,3 +1,9 @@
 # trees
 
-lyon trees https://bertt.github.io/trees/lyon/1.0/
+lyon trees 
+
+1.0 - i3dm - https://bertt.github.io/trees/lyon/1.0/
+
+1.1 - glTF - https://bertt.github.io/trees/lyon/1.1/
+
+
