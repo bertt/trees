@@ -41,12 +41,18 @@
     //tileset.debugColorizeTiles = true;
     //tileset.debugShowBoundingVolume = true;
     viewer.scene.globe.depthTestAgainstTerrain = true;
-    viewer.zoomTo(tileset, new Cesium.HeadingPitchRange(0, -0.5, 0));
-
-//viewer.camera.flyTo({
-//    destination: Cesium.Cartesian3.fromDegrees(4.84,45.7, 5000.0),
-//});
     viewer.scene.primitives.add(tileset);
+
+    viewer.camera.flyTo({
+       destination:  new Cesium.Cartesian3( 4444131.241789738, 374298.21190996235, 4544898.417082506),
+       duration: 0,
+       orientation: {
+          heading : 6.24888731943846,
+          pitch : -0.2744764434242639,
+          roll : 0.000024357143399100778
+       }
+    });
+    
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
     handler.setInputAction(function(movement) {
       var feature = viewer.scene.pick(movement.position);
