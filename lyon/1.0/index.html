@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.98.0/Cesium.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.98.0/Widgets/widgets.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.110.0/Cesium.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cesium/1.110.0/Widgets/widgets.min.css" rel="stylesheet">
   
     <style>
       html, body, #cesiumContainer {
@@ -24,24 +24,22 @@
 </head>
 <body>
   <div id="cesiumContainer"></div>
-  <script>
-    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiNDc1ZjQwMS1hOGI2LTQyNmUtYmYxMi1jODlhNDNlMjViZTkiLCJpZCI6NDc4OSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU0MTYyNTg3OX0.mNoGLdYuwqsnRRkQtdYNMbJfMBoZF2hPkbc4SRVVqNw';
+  <script type="module">
     var viewer = new Cesium.Viewer('cesiumContainer', {
-      // terrainProvider : Cesium.createWorldTerrain()
+        terrainProvider: await Cesium.CesiumTerrainProvider.fromUrl('https://bertt.github.io/lyon/tiles/'),
+        // terrainProvider: await Cesium.createWorldTerrainAsync()
+        timeline: false,
+        animation: false,
+        baseLayerPicker: false,
+        sceneMode: Cesium.SceneMode.SCENE3D,
+        skyAtmosphere: false        
     });
-    var terrainProvider = new Cesium.CesiumTerrainProvider({
-       url : 'https://bertt.github.io/lyon/tiles/'
-    });
-    viewer.scene.terrainProvider = terrainProvider;
     viewer.scene.debugShowFramesPerSecond = true;
-    var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-        url : 'tileset.json',
-        // debugShowRenderingStatistics: 'true'        
-    }));
-    //tileset.debugColorizeTiles = true;
-    //tileset.debugShowBoundingVolume = true;
+    var tileset = await Cesium.Cesium3DTileset.fromUrl("tileset.json");
+    viewer.scene.primitives.add(tileset);
+    
+    //for debugging: tileset.debugShowBoundingVolume = true;
     viewer.scene.globe.depthTestAgainstTerrain = true;
-    // viewer.scene.primitives.add(tileset);
 
     viewer.camera.flyTo({
        destination:  new Cesium.Cartesian3( 4444131.241789738, 374298.21190996235, 4544898.417082506),
@@ -52,22 +50,7 @@
           roll : 0.000024357143399100778
        }
     });
-    
-    var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
-    handler.setInputAction(function(movement) {
-      var feature = viewer.scene.pick(movement.position);
-      if (!Cesium.defined(feature)) {
-          return;
-
-      }
-      var propertyNames = feature.getPropertyNames();
-      var length = propertyNames.length;
-        for (var i = 0; i < length; ++i) {
-            var propertyName = propertyNames[i];
-            console.log(propertyName + ': ' + feature.getProperty(propertyName));
-        }
-  }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
-
+   
   </script>
 </body>
 </html>
