@@ -14,8 +14,9 @@
 
 Source: https://data.metropolegrenoble.fr/
 
-https://bertt.github.io/trees/grenoble
+1.0 - i3dm - https://bertt.github.io/trees/grenoble/1.0/
 
+1.1 - glTF - https://bertt.github.io/trees/grenoble/1.1/
 
 ## nantes trees
 
